@@ -6,6 +6,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         BankAccount account = new BankAccount(new BigDecimal("50.00"));
+        BankAccount account2 = new BankAccount(new BigDecimal("0.00"));
 
         boolean exit = false;
 
@@ -14,7 +15,8 @@ public class Main {
             System.out.println("1 - deposit");
             System.out.println("2 - withdrawal");
             System.out.println("3 - print balance");
-            System.out.println("4 - exit");
+            System.out.println("4 - transfer account");
+            System.out.println("5 - exit");
             System.out.println("Select option: ");
 
             String input = sc.nextLine();
@@ -33,6 +35,11 @@ public class Main {
                     account.printBalance();
                     break;
                 case "4":
+                    System.out.print("Enter amount to transfer to another account: ");
+                    BigDecimal transferAmount = new BigDecimal(sc.nextLine());
+                    account.transfer(account2, transferAmount);
+                    break;
+                case "5":
                     exit = true;
                     System.out.println("Exiting from banking menu");
                     break;

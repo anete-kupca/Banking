@@ -30,4 +30,16 @@ public class BankAccount {
         System.out.println("Current balance: " + balance + " $");
     }
 
+    public void transfer(BankAccount other, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            System.out.println("Transfer amount must be positive");
+        } else if (amount.compareTo(this.balance) > 0) {
+            System.out.println("Insufficient funds");
+        } else {
+            this.withdraw(amount);
+            other.deposit(amount);
+            System.out.println("Transferred " + amount + " $ to another account");
+        }
+    }
+
 }

@@ -13,7 +13,8 @@ public class Main {
             System.out.println("--Banking Menu--");
             System.out.println("1 - deposit");
             System.out.println("2 - withdrawal");
-            System.out.println("3 - exit");
+            System.out.println("3 - print balance");
+            System.out.println("4 - exit");
             System.out.println("Select option: ");
 
             String input = sc.nextLine();
@@ -29,6 +30,9 @@ public class Main {
                     BigDecimal withdrawalAmount = new BigDecimal(sc.nextLine());
                     account.withdraw(withdrawalAmount);
                 case "3":
+                    account.printBalance();
+                    break;
+                case "4":
                     exit = true;
                     System.out.println("Exiting from banking menu");
                     break;

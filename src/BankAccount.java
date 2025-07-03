@@ -26,4 +26,8 @@ public class BankAccount {
         }
     }
 
+    public void printBalance() {
+        System.out.println("Current balance: " + balance + " $");
+    }
+
 }

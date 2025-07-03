@@ -15,5 +15,15 @@ public class BankAccount {
             System.out.println("Deposit amount must be positive");
         }
     }
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            System.out.println("Withdrawal amount must be positive");
+        } else if (amount.compareTo(balance) > 0) {
+            System.out.println("Insufficient funds");
+        } else {
+            balance = balance.subtract(amount);
+            System.out.println("Withdrew: " + amount + " $");
+        }
+    }
 
 }

@@ -2,10 +2,18 @@ import java.math.BigDecimal;
 
 public class BankAccount {
     private BigDecimal balance;
+    private static int counter = 1;
+    private int accountNumber;
 
-    public BankAccount(BigDecimal balance) {this.balance = balance;}
+    public BankAccount(BigDecimal balance) {
+        this.balance = balance;
+        this.accountNumber = counter++;
+    }
     public BigDecimal getBalance() {return balance;}
     public void setBalance(BigDecimal balance) {this. balance = balance;}
+
+    public int getAccountNumber() {return accountNumber;}
+    public void setAccountNumber(int accountNumber) {this.accountNumber = accountNumber;}
 
     public void deposit(BigDecimal amount){
         if (amount.compareTo(BigDecimal.ZERO) > 0){
@@ -42,4 +50,5 @@ public class BankAccount {
         }
     }
 
+    public String toCSV() {return accountNumber + "," + balance;}
 }

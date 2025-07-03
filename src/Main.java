@@ -1,13 +1,20 @@
 import java.math.BigDecimal;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        ArrayList<BankAccount> accounts = new ArrayList<>();
+
         BankAccount account = new BankAccount(new BigDecimal("50.00"));
         BankAccount account2 = new BankAccount(new BigDecimal("0.00"));
 
+        accounts.add(account);
+        accounts.add(account2);
         boolean exit = false;
 
         while (!exit){
@@ -16,7 +23,8 @@ public class Main {
             System.out.println("2 - withdrawal");
             System.out.println("3 - print balance");
             System.out.println("4 - transfer account");
-            System.out.println("5 - exit");
+            System.out.println("5 - Export Report to CSV");
+            System.out.println("6 - exit");
             System.out.println("Select option: ");
 
             String input = sc.nextLine();
@@ -32,7 +40,9 @@ public class Main {
                     BigDecimal withdrawalAmount = new BigDecimal(sc.nextLine());
                     account.withdraw(withdrawalAmount);
                 case "3":
-                    account.printBalance();
+                    for (BankAccount acc : accounts) {
+                        acc.printBalance();
+                    }
                     break;
                 case "4":
                     System.out.print("Enter amount to transfer to another account: ");
@@ -40,6 +50,9 @@ public class Main {
                     account.transfer(account2, transferAmount);
                     break;
                 case "5":
+                    exportToCSV(accounts);
+                    break;
+                case "6":
                     exit = true;
                     System.out.println("Exiting from banking menu");
                     break;
@@ -48,5 +61,16 @@ public class Main {
             }
         }
         sc.close();
+    }
+    public static void exportToCSV(ArrayList<BankAccount> accounts) {
+        try (FileWriter writer = new FileWriter("accounts.csv")) {
+            writer.write("AccountNumber,Balance");
+            for (BankAccount account : accounts) {
+                writer.write(account.toCSV());
+            }
+            System.out.println("report saved to file accounts.csv");
+        } catch (IOException e) {
+            System.out.println("error: " + e.getMessage());
+        }
     }
 }

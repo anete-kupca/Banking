@@ -10,28 +10,49 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         Map<Integer, BankAccount> accounts = new HashMap<>();
-
-        BankAccount account = new BankAccount(new BigDecimal("50.00"));
-        BankAccount account2 = new BankAccount(new BigDecimal("0.00"));
-
-        accounts.put(account.getAccountNumber(), account);
-        accounts.put(account2.getAccountNumber(), account2);
         boolean exit = false;
 
         while (!exit){
             System.out.println("--Banking Menu--");
-            System.out.println("1 - deposit");
-            System.out.println("2 - withdrawal");
-            System.out.println("3 - print balance");
-            System.out.println("4 - transfer account");
-            System.out.println("5 - Export Report to CSV");
-            System.out.println("6 - exit");
+            System.out.println("1 - create an account");
+            System.out.println("2 - delete an account");
+            System.out.println("3 - deposit");
+            System.out.println("4 - withdrawal");
+            System.out.println("5 - print balance");
+            System.out.println("6 - transfer account");
+            System.out.println("7 - Export Report to CSV");
+            System.out.println("8 - exit");
             System.out.println("Select option: ");
 
             String input = sc.nextLine();
 
             switch(input) {
                 case "1": {
+                    System.out.print("Enter new account number: ");
+                    int newAccNum = Integer.parseInt(sc.nextLine());
+
+                    if (accounts.containsKey(newAccNum)) {
+                        System.out.println("Account already exists");
+                    } else {
+                        BankAccount newAccount = new BankAccount(BigDecimal.ZERO);
+                        accounts.put(newAccNum, newAccount);
+                        System.out.println("Account " + newAccNum + " created successfully");
+                    }
+                    break;
+                }
+                case "2": {
+                    System.out.print("Enter account number to delete: ");
+                    int deleteAccNum = Integer.parseInt(sc.nextLine());
+
+                    if (accounts.containsKey(deleteAccNum)) {
+                        accounts.remove(deleteAccNum);
+                        System.out.println("Account " + deleteAccNum + " deleted");
+                    } else {
+                        System.out.println("Account not found");
+                    }
+                    break;
+                }
+                case "3": {
                     int accNum = askAccountNumber(sc);
                     BankAccount acc = accounts.get(accNum);
                     if (acc != null) {
@@ -43,7 +64,7 @@ public class Main {
                     }
                     break;
                 }
-                case "2": {
+                case "4": {
                     int accNum = askAccountNumber(sc);
                     BankAccount acc = accounts.get(accNum);
                     if (acc != null) {
@@ -55,13 +76,13 @@ public class Main {
                     }
                     break;
                 }
-                case "3": {
+                case "5": {
                     for (BankAccount acc : accounts.values()) {
                         acc.printBalance();
                     }
                     break;
                 }
-                case "4": {
+                case "6": {
                     System.out.print("Enter FROM account number: ");
                     int from = Integer.parseInt(sc.nextLine());
                     System.out.print("Enter TO account number: ");
@@ -78,11 +99,11 @@ public class Main {
                     }
                     break;
                 }
-                case "5": {
+                case "7": {
                     exportToCSV(accounts);
                     break;
                 }
-                case "6": {
+                case "8": {
                     exit = true;
                     System.out.println("Exiting from banking menu");
                     break;

@@ -1,3 +1,5 @@
+package main;
+
 import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -115,9 +117,9 @@ public class Main {
         sc.close();
     }
 
-    private static int askAccountNumber(Scanner scanner) {
+    private static int askAccountNumber(Scanner sc) {
         System.out.print("Enter account number: ");
-        return Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(sc.nextLine());
     }
 
     public static void exportToCSV(Map<Integer, BankAccount> accounts) {

@@ -122,7 +122,7 @@ public class Main {
 
     public static void exportToCSV(Map<Integer, BankAccount> accounts) {
         try (FileWriter writer = new FileWriter("accounts.csv")) {
-            writer.write("AccountNumber,Balance");
+            writer.write("AccountNumber,Balance" + "\n");
             for (BankAccount account : accounts.values()) {
                 writer.write(account.toCSV());
             }

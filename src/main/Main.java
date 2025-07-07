@@ -6,13 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         Map<Integer, BankAccount> accounts = new HashMap<>();
         boolean exit = false;
+
+        logger.info("Banking application started");
 
         while (!exit){
             System.out.println("--Banking Menu--");
@@ -27,30 +32,37 @@ public class Main {
             System.out.println("Select option: ");
 
             String input = sc.nextLine();
+            logger.debug("User selected option: {}", input);
 
             switch(input) {
                 case "1": {
                     System.out.print("Enter new account number: ");
                     int newAccNum = Integer.parseInt(sc.nextLine());
+                    logger.debug("Created new account with account number: {}", newAccNum);
 
                     if (accounts.containsKey(newAccNum)) {
                         System.out.println("Account already exists");
+                        logger.warn("Attempted to create duplicate account number: {}", newAccNum);
                     } else {
                         BankAccount newAccount = new BankAccount(BigDecimal.ZERO);
                         accounts.put(newAccNum, newAccount);
                         System.out.println("Account " + newAccNum + " created successfully");
+                        logger.info("Account {} created successfully", newAccNum);
                     }
                     break;
                 }
                 case "2": {
                     System.out.print("Enter account number to delete: ");
                     int deleteAccNum = Integer.parseInt(sc.nextLine());
+                    logger.debug("Deleting account number: {}", deleteAccNum);
 
                     if (accounts.containsKey(deleteAccNum)) {
                         accounts.remove(deleteAccNum);
                         System.out.println("Account " + deleteAccNum + " deleted");
+                        logger.info("Account {} deleted", deleteAccNum);
                     } else {
                         System.out.println("Account not found");
+                        logger.warn("Attempted to delete non-existent account number: {}", deleteAccNum);
                     }
                     break;
                 }
